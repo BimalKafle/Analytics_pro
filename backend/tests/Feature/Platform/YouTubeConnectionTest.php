@@ -6,6 +6,7 @@ use App\Models\PlatformAccount;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class YouTubeConnectionTest extends TestCase
@@ -15,6 +16,10 @@ class YouTubeConnectionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        // Job dispatch on connect is covered by VideoImportTest;
+        // here the queue is faked so callbacks stay focused on OAuth.
+        Queue::fake();
 
         config([
             'services.youtube.client_id' => 'test-client-id',

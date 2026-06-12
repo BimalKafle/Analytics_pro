@@ -6,6 +6,7 @@ use App\Enums\Platform;
 use App\Exceptions\InvalidOAuthStateException;
 use App\Exceptions\PlatformApiException;
 use App\Http\Controllers\Controller;
+use App\Jobs\ImportVideosJob;
 use App\Services\PlatformConnectionService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -50,6 +51,27 @@ class YouTubeConnectionController extends Controller
         }
 
         return $this->redirectToFrontend(['youtube' => 'connected']);
+    }
+
+    /**
+     * Queue a fresh video import for the creator's YouTube account(s).
+     */
+    public function sync(Request $request): JsonResponse
+    {
+        $accounts = $request->user()
+            ->platformAccounts()
+            ->where('platform', Platform::YouTube)
+            ->get();
+
+        if ($accounts->isEmpty()) {
+            return response()->json(['message' => __('No YouTube connection found.')], 404);
+        }
+
+        foreach ($accounts as $account) {
+            ImportVideosJob::dispatch($account);
+        }
+
+        return response()->json(['message' => __('Video import has been queued.')], 202);
     }
 
     public function disconnect(Request $request): JsonResponse

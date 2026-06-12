@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\Platform;
 use App\Exceptions\InvalidOAuthStateException;
+use App\Jobs\ImportVideosJob;
 use App\Models\PlatformAccount;
 use App\Models\User;
 use App\Services\Platform\PlatformProviderFactory;
@@ -50,7 +51,7 @@ class PlatformConnectionService
         $tokens = $provider->exchangeAuthorizationCode($code);
         $channel = $provider->fetchChannelInfo($tokens->accessToken);
 
-        return PlatformAccount::updateOrCreate(
+        $account = PlatformAccount::updateOrCreate(
             [
                 'user_id' => $userId,
                 'platform' => $platform,
@@ -64,6 +65,12 @@ class PlatformConnectionService
                 'connected_at' => now(),
             ],
         );
+
+        // Import must never block the OAuth redirect (product rule:
+        // synchronization runs through background jobs).
+        ImportVideosJob::dispatch($account);
+
+        return $account;
     }
 
     /**

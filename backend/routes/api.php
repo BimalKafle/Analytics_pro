@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\Platform\PlatformAccountController;
 use App\Http\Controllers\Platform\YouTubeConnectionController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
 
 // Platform connections require a verified email address.
 Route::middleware(['auth:sanctum', 'verified'])->group(function (): void {
+    Route::get('/platform-accounts', [PlatformAccountController::class, 'index']);
     Route::get('/youtube/connect', [YouTubeConnectionController::class, 'connect']);
+    Route::post('/youtube/sync', [YouTubeConnectionController::class, 'sync']);
     Route::delete('/youtube/disconnect', [YouTubeConnectionController::class, 'disconnect']);
 });
 

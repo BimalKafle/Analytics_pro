@@ -38,4 +38,13 @@ interface PlatformProvider
      * @throws PlatformApiException
      */
     public function fetchChannelInfo(string $accessToken): ChannelInfo;
+
+    /**
+     * Fetch metadata for all videos of the connected channel.
+     *
+     * @return list<VideoData>
+     *
+     * @throws PlatformApiException
+     */
+    public function fetchVideos(string $accessToken): array;
 }

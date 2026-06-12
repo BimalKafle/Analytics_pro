@@ -70,5 +70,10 @@ async function signOut(): Promise<void> {
         <dd>{{ user.email_verified ? 'Yes' : 'No' }}</dd>
       </div>
     </dl>
+
+    <PlatformConnections v-if="user.email_verified" />
+    <p v-else class="text-sm text-gray-600">
+      Verify your email address to connect platforms.
+    </p>
   </section>
 </template>

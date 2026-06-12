@@ -2,20 +2,21 @@
 
 Workflow rules:
 
-- One task = one branch, branched from `main`.
+- One task = one branch, branched from the latest `main`.
 - Branch naming: `feature/task-XX-short-name` (e.g. `feature/task-03-database-schema`).
-- A task is merged back into `main` only when it is complete and verified.
+- Claude implements the task and commits on the task branch only.
+- Pull request creation, code review, and merging into `main` are done by the user.
 - Each task should leave the project in a working state.
 
-Status legend: `[ ]` pending · `[x]` merged into main
+Status legend: `[ ]` pending · `[x]` merged into main (checked off after the user merges the PR)
 
 ---
 
 ## Foundation
 
-- [x] **Task 00 — Project task list**
+- [ ] **Task 00 — Project task list & workflow rules**
   - Branch: `feature/task-00-task-list`
-  - Add this task list to the repository.
+  - Add this task list and the git workflow rules to the repository.
 
 - [ ] **Task 01 — Docker environment & Laravel backend scaffold**
   - Branch: `feature/task-01-backend-scaffold`

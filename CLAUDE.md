@@ -161,6 +161,18 @@ When working on frontend code, Claude must:
 
 Do not place complex business logic directly inside UI components if it can be extracted.
 
+### Frontend State Management (Pinia)
+
+Shared frontend state must use Pinia, following these rules:
+
+- One store per domain, as a file in `stores/` (e.g. `stores/auth.ts`, `stores/videos.ts`)
+- Use setup stores: `defineStore('name', () => { ... })`, not the options syntax
+- Destructure state and getters through `storeToRefs`; destructure actions directly from the store instance (plain destructuring of state breaks reactivity)
+- API calls belong in store actions or services, never directly in components
+- Never instantiate a store at module top level; call `useXStore()` inside setup, middleware, plugin, or another store's action
+- Persistent session data (e.g. the auth token) lives in an SSR-readable cookie wrapped by the store, not in store state alone
+- Local UI state (form inputs, open/closed flags) stays in components; only cross-page or cross-component state goes into a store
+
 ---
 
 ## 9. Backend Rules

@@ -14,17 +14,17 @@ Status legend: `[ ]` pending · `[x]` merged into main (checked off after the us
 
 ## Foundation
 
-- [ ] **Task 00 — Project task list & workflow rules**
+- [x] **Task 00 — Project task list & workflow rules**
   - Branch: `feature/task-00-task-list`
   - Add this task list and the git workflow rules to the repository.
 
-- [ ] **Task 01 — Docker environment & Laravel backend scaffold**
+- [x] **Task 01 — Docker environment & Laravel backend scaffold**
   - Branch: `feature/task-01-backend-scaffold`
   - Docker Compose with `app`, `postgres`, `redis`, `queue-worker`, `scheduler` services.
   - Fresh Laravel 12 (PHP 8.4) project under `backend/`.
   - `.env.example`, Redis queue/cache config, health-check route.
 
-- [ ] **Task 02 — Nuxt 3 frontend scaffold**
+- [x] **Task 02 — Nuxt 3 frontend scaffold**
   - Branch: `feature/task-02-frontend-scaffold`
   - Nuxt 3 + TypeScript + Tailwind CSS under `frontend/`.
   - Base layout, API client setup pointing at the Laravel backend.

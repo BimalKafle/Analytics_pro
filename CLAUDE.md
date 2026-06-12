@@ -394,7 +394,22 @@ Code should be boring, understandable, and reliable.
 
 ---
 
-## 23. Final Rule
+## 23. Git Workflow Rules
+
+Claude must follow this workflow for all changes:
+
+- One task = one branch, created from the latest `main`.
+- Branch naming: `feature/task-XX-short-name`.
+- Claude may create branches and commits for the task it is working on.
+- Claude must NEVER merge anything into `main`.
+- Claude must NEVER push to `main` or delete branches.
+- All merge-related work — creating pull requests, code review, and merging — is done by the user.
+- When a task is complete, Claude commits the work on the task branch and reports that the branch is ready for review.
+- Claude must ask for explicit consent before any action that modifies `main`.
+
+---
+
+## 24. Final Rule
 
 Every code change should make the project easier to understand, easier to maintain, and safer to extend.
 

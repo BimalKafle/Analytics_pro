@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\Platform\YouTubeConnectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', HealthController::class);
@@ -24,3 +25,12 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
         ->middleware('throttle:auth');
 });
+
+// Platform connections require a verified email address.
+Route::middleware(['auth:sanctum', 'verified'])->group(function (): void {
+    Route::get('/youtube/connect', [YouTubeConnectionController::class, 'connect']);
+    Route::delete('/youtube/disconnect', [YouTubeConnectionController::class, 'disconnect']);
+});
+
+// Hit by Google's redirect; protected by the one-time state token, not a session.
+Route::get('/youtube/callback', [YouTubeConnectionController::class, 'callback']);
